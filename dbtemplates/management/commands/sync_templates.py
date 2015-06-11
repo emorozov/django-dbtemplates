@@ -3,8 +3,8 @@ import codecs
 from optparse import make_option
 
 from django.contrib.sites.models import Site
+from django.template.utils import get_app_template_dirs
 from django.core.management.base import CommandError, NoArgsCommand
-from django.template.loaders.app_directories import app_template_dirs
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
@@ -55,6 +55,7 @@ class Command(NoArgsCommand):
             raise CommandError("Please make sure settings.TEMPLATE_DIRS is a "
                                "list or tuple.")
 
+        app_template_dirs = get_app_template_dirs('templates')
         if app_first:
             tpl_dirs = app_template_dirs + settings.TEMPLATE_DIRS
         else:
